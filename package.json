@@ -1,0 +1,12 @@
+{
+  "name": "from-the-other-side",
+  "version": "1.0.0",
+  "description": "This is a node server for practicing node concepts",
+  "license": "ISC",
+  "author": "Mohanad Babgi",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
