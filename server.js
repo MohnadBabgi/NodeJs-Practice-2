@@ -1,12 +1,18 @@
 import http from 'http'
-const PORT = 8000
+import fs from 'fs/promises'
+import { serveStatic } from './utils/ServeStatic.js';
+import { sendJSONres } from './utils/sendResponse.js';
+import path from 'path'
+const __dirname = import.meta.dirname
 
-const server = http.createServer( (req,res) =>{
-    res.statusCode = 200;
-    res.setHeader('Content-type','text/html')
-    res.end( '<html><h1>The server is working</h1></html>')
+const PORT = 8000;
 
+  const server = http.createServer( async(req, res) => {
+  const pathToResource = path.join(__dirname, 'public', 'index.html')
+  const content = await fs.readFile(pathToResource,'utf8')
+  res.statusCode = 200;
+  sendJSONres(res,res.statusCode,content)
+  
+});
 
-})
-
-server.listen(PORT,() => console.log(`Connected on Port: ${PORT}`))
+server.listen(PORT, () => console.log(`Connected on Port: ${PORT}`));
