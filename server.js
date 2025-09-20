@@ -9,11 +9,28 @@ const PORT = 8000;
 
   const server = http.createServer(async(req, res) => {
   const publicDir = path.join(__dirname, 'public')
-  const pathToResource = path.join(publicDir, req.url === '/' ? 'index.html' : req.url)
-  const content = await fs.readFile(pathToResource,'utf8')
+  const pathToResource = path.join(publicDir,'index.html')
+  const content =await fs.readFile(pathToResource,'utf8')
+  if(req.method === 'POST'){
+    let body = ''
+        
+    req.on("data", chunk => {
+      body += chunk.toString(); 
+      
+    });
+    req.on("end", () => {
+    console.log(`Your email is: ${body}`);
+    res.statusCode = 201;
+    res.setHeader("Content-Type", "text/html");
+    res.end(content);
+  });
+  }else{
   res.statusCode = 200
   res.setHeader('Content-Type', 'text/html')
   res.end(content)
+  }
+  
+
   
 });
 
